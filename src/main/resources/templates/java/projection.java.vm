@@ -1,0 +1,25 @@
+package ${packageName}.domain.projection;
+
+import java.io.Serializable;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+#foreach ($import in $importList)
+import ${import};
+#end
+
+/**
+ * ${table.tableComment}投影
+ * @domain ${ClassName} $column.isList
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+public class ${ClassName}Projection implements Serializable{
+#foreach ($column in $showList)
+    /** $column.comment */
+    private $column.javaType $column.javaField;
+#end
+}

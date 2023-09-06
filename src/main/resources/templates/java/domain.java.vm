@@ -1,0 +1,26 @@
+package ${packageName}.domain;
+
+import java.io.Serializable;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+#foreach ($import in $importList)
+import ${import};
+#end
+
+/**
+ * ${table.tableComment}实体
+ * @table ${tableName}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+@Builder
+public class ${ClassName} implements Serializable{
+#foreach ($column in $columns)
+    /** $column.comment */
+    private $column.javaType $column.javaField;
+#end
+}
