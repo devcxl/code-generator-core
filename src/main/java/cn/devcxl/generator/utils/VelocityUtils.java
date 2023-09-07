@@ -21,30 +21,27 @@ public class VelocityUtils {
     private static final String PROJECT_PATH = "main/java";
 
     /**
-     * html空间路径
-     */
-    private static final String TEMPLATES_PATH = "main/resources/templates";
-
-    /**
      * 设置模板变量信息
      */
     public static VelocityContext prepareContext(Configuration configuration, EntityInfo entityInfo) {
         String packageName = configuration.getPackageName();
         String author = configuration.getAuthor();
         VelocityContext velocityContext = new VelocityContext();
-        velocityContext.put("table", entityInfo);
+        velocityContext.put("entity", entityInfo);
         velocityContext.put("tableName", entityInfo.getName());
         velocityContext.put("ClassName", entityInfo.getClassName());
-
         velocityContext.put("className", StringUtils.uncapitalize(entityInfo.getClassName()));
-        velocityContext.put("basePackage", getPackagePrefix(packageName));
         velocityContext.put("packageName", packageName);
         velocityContext.put("author", author);
         velocityContext.put("datetime", DateUtil.today());
-        velocityContext.put("pkColumn", entityInfo.getPkColumn());
         velocityContext.put("importList", getImportList(entityInfo));
-        velocityContext.put("columns", entityInfo.getFields());
-        velocityContext.put("showList", entityInfo.showListFields());
+        velocityContext.put("fields", entityInfo.getFields());
+        velocityContext.put("primaryKeyFields",entityInfo.primaryKeyFields());
+        velocityContext.put("noPrimaryKeyFields",entityInfo.noPrimaryKeyFields());
+        velocityContext.put("primaryKeyField",entityInfo.primaryKeyField());
+        velocityContext.put("showListFields", entityInfo.showListFields());
+        velocityContext.put("requiredFields", entityInfo.requiredFields());
+        velocityContext.put("queryFields", entityInfo.queryFields());
         return velocityContext;
     }
 
@@ -56,14 +53,18 @@ public class VelocityUtils {
      */
     public static List<String> getTemplateList() {
         List<String> templates = new ArrayList<String>();
+        // 实体类
         templates.add("templates/java/domain.java.vm");
-        templates.add("templates/java/projection.java.vm");
+        // 展示类
+//        templates.add("templates/java/projection.java.vm");
+        // 查询条件
+        templates.add("templates/java/query.java.vm");
 //        templates.add("templates/java/service.java.vm");
 //        templates.add("templates/java/serviceImpl.java.vm");
 //        templates.add("templates/java/controller.java.vm");
 //
 //        templates.add("templates/java/mapper.java.vm");
-//        templates.add("templates/xml/mapper.xml.vm");
+        templates.add("templates/xml/mapper.xml.vm");
 
 //        templates.add("templates/html/list.html.vm");
 //        templates.add("templates/html/add.html.vm");
@@ -98,17 +99,6 @@ public class VelocityUtils {
             fileName = businessName + "Menu.sql";
         }
         return fileName;
-    }
-
-    /**
-     * 获取包前缀
-     *
-     * @param packageName 包名称
-     * @return 包前缀名称
-     */
-    public static String getPackagePrefix(String packageName) {
-        int lastIndex = packageName.lastIndexOf(".");
-        return StringUtils.substring(packageName, 0, lastIndex);
     }
 
     /**

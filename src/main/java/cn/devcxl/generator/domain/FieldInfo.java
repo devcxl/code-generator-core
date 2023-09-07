@@ -49,7 +49,7 @@ public class FieldInfo {
     /**
      * 是否主键
      */
-    private boolean isPk;
+    private boolean isPrimaryKey;
 
     /**
      * 是否自增
@@ -103,7 +103,7 @@ public class FieldInfo {
         this.comment = comment;
         this.fieldType = fieldType;
         this.customSql = customSql;
-        this.isPk = isPk;
+        this.isPrimaryKey = isPk;
         this.isIncrement = isIncrement;
         this.isRequired = isRequired;
         this.isInsert = isInsert;

@@ -3,6 +3,7 @@ package cn.devcxl.generator.domain;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,17 +41,13 @@ public class EntityInfo {
      */
     private String outPath;
 
-    /**
-     * 主键信息
-     */
-    private FieldInfo pkColumn;
 
     /**
      * 表列信息
      */
     private List<FieldInfo> fields;
 
-    public EntityInfo(Configuration configuration, String name, String comment, String className, FieldInfo pkColumn, List<FieldInfo> fields) {
+    public EntityInfo(Configuration configuration, String name, String comment, String className, List<FieldInfo> fields) {
         if (configuration.isAutoRemovePre()) {
             String tablePrefix = configuration.getTablePrefix();
             boolean b = className.startsWith(tablePrefix);
@@ -65,7 +62,6 @@ public class EntityInfo {
         this.outPath = projectSrcPath + packageName;
         this.name = name;
         this.comment = comment;
-        this.pkColumn = pkColumn;
         this.fields = fields;
     }
 
@@ -84,4 +80,47 @@ public class EntityInfo {
     public List<FieldInfo> showListFields(){
         return this.fields.stream().filter(FieldInfo::isList).collect(Collectors.toList());
     }
+
+    /**
+     * 作为条件查询的字段
+     * @return
+     */
+    public List<FieldInfo> queryFields(){
+        return this.fields.stream().filter(FieldInfo::isQuery).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 获取主键字段
+     * @return
+     */
+    public List<FieldInfo> primaryKeyFields(){
+        return this.fields.stream().filter(FieldInfo::isPrimaryKey).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取非主键字段
+     * @return
+     */
+    public List<FieldInfo> noPrimaryKeyFields(){
+        return this.fields.stream().filter(fieldInfo -> !fieldInfo.isPrimaryKey()).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 获取主键字段
+     * @return
+     */
+    public FieldInfo primaryKeyField(){
+        List<FieldInfo> fieldInfos = this.primaryKeyFields();
+        int size = fieldInfos.size();
+        if (fieldInfos.size()==1){
+            return fieldInfos.get(0);
+        }else {
+            throw new RuntimeException(MessageFormat.format("primaryKeyFields count {0}",size));
+        }
+    }
+
+
+
 }

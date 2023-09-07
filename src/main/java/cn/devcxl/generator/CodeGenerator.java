@@ -45,7 +45,7 @@ public class CodeGenerator {
         fieldInfos.add(birthdayField);
 
         // 创建表信息
-        EntityInfo entityInfo = new EntityInfo(configuration, "cms_user", "用户表", "User", idField, fieldInfos);
+        EntityInfo entityInfo = new EntityInfo(configuration, "cms_user", "用户表", "User", fieldInfos);
 
         VelocityInitializer.initVelocity();
         VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
