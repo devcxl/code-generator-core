@@ -3,37 +3,22 @@
 <mapper namespace="${packageName}.mapper.${ClassName}Mapper">
 
     <resultMap type="${ClassName}" id="${ClassName}Result">
-#foreach ($column in $columns)
-        <result property="${column.javaField}" column="${column.columnName}"/>
-#end
-#if($table.tree)
-        <result property="parentName" column="parent_name"/>
-#end
-    </resultMap>
-#if($table.sub)
-    <resultMap id="${ClassName}${subClassName}Result" type="${ClassName}" extends="${ClassName}Result">
-        <collection property="${subclassName}List" notNullColumn="${subTable.pkColumn.columnName}"
-                        javaType="java.util.List" resultMap="${subClassName}Result"/>
+    #foreach($field in $fields)
+        <result property="${field.javaField}" column="${field.name}"/>
+    #end
     </resultMap>
 
-    <resultMap type="${subClassName}" id="${subClassName}Result">
-#foreach ($column in $subTable.columns)
-        <result property="${column.javaField}" column="${column.columnName}"/>
-#end
-    </resultMap>
-#end
-
-    <select id="select${ClassName}List" parameterType="${ClassName}" resultMap="${ClassName}Result">
-        select #foreach($column in $columns)`$column.columnName`#if($velocityCount != $columns.size()),#end#end from `${tableName}`
+    <select id="list" parameterType="${ClassName}" resultMap="${ClassName}Result">
+        select #foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end from `${tableName}`
         <where>
-#foreach($column in $columns)
-#set($queryType=$column.queryType)
-#set($javaField=$column.javaField)
-#set($javaType=$column.javaType)
-#set($columnName=$column.columnName)
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#if($column.query)
-#if($column.queryType == "EQ")
+#foreach($field in $fields)
+#set($queryType=$field.queryType)
+#set($javaField=$field.javaField)
+#set($javaType=$field.javaType)
+#set($columnName=$field.name)
+#set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
+#if($field.query)
+#if($field.queryType == "EQ")
              <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` = #{$javaField}</if>
 #elseif($queryType == "NE")
              <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` != #{$javaField}</if>
@@ -48,7 +33,7 @@
 #elseif($queryType == "LIKE")
              <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` like concat('%', #{$javaField}, '%')</if>
 #elseif($queryType == "BETWEEN")
-             <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and `$columnName` between #{params.begin$AttrName} and #{params.end$AttrName}</if>
+             <if test="begin$AttrName != null and begin$AttrName != '' and end$AttrName != null and end$AttrName != ''"> and `$columnName` between #{begin$AttrName} and #{end$AttrName}</if>
 #end
 #end
 #end
@@ -58,4 +43,58 @@
 #end
     </select>
 
+    <!-- 增加 -->
+    <insert id="insert" parameterType="${packageName}.domain.${ClassName}">
+        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $fields)`#{$field.name}`#if($foreach.hasNext),#end#end )
+    </insert>
+    <!-- 增加 -->
+    <insert id="insertRequired" parameterType="${packageName}.domain.${ClassName}">
+        INSERT INTO `${tableName}` (#foreach($field in $requiredFields)`$field.name`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $requiredFields)`#{$field.name}`#if($foreach.hasNext),#end#end )
+    </insert>
+
+    <!-- 删除用户（虚拟删除，设置标记字段） -->
+    <update id="delete">
+        UPDATE ${tableName} SET is_deleted = 1 WHERE id = #{id}
+    </update>
+
+    <!-- 更新用户信息 -->
+    <update id="update" parameterType="${packageName}.domain.${ClassName}">
+        UPDATE `${tableName}`
+        <set>
+        #foreach($field in $fields)
+        #if($field.name != $entity.primaryKeyField().name)
+            <if test="$field.name != null#if($field.javaType == 'String' ) and $field.javaField.trim() != ''#end">
+                `$field.name = #{$field.JavaField}`,
+            </if>
+        #end
+        #end
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据用户ID查询单一用户 -->
+    <select id="getById" parameterType="int" resultType="${packageName}.domain.${ClassName}">
+        SELECT * FROM `${tableName}` WHERE id = #{id}
+    </select>
+
+    <!-- 分页查询用户列表 -->
+    <select id="getUsersByPage" parameterType="map" resultType="${packageName}.domain.${ClassName}">
+        SELECT *
+        FROM `${tableName}`
+        WHERE is_deleted = 0
+        ORDER BY id
+            LIMIT #{start}, #{pageSize}
+    </select>
+
+    <!-- 批量虚拟删除 -->
+    <update id="batchDelete" parameterType="list">
+        UPDATE `${tableName}`
+        SET is_deleted = 1
+        WHERE id IN
+        <foreach collection="list" item="userId" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

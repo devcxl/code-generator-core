@@ -12,13 +12,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @date ${datetime}
  */
 @Mapper
-public interface ${ClassName}Mapper extends BaseMapper<${ClassName}> {
+public interface ${ClassName}Mapper {
     /**
-     * 查询${functionName}列表
+     * 查询${ClassName}列表
      *
      * @param ${className} ${functionName}
-     * @return ${functionName}集合
+     * @return ${ClassName}集合
      */
-    List<${ClassName}> select${ClassName}List(${ClassName} ${className});
+    List<${ClassName}> list(Query${ClassName} query${ClassName});
 
 }

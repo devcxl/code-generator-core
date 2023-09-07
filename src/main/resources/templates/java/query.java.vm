@@ -1,0 +1,33 @@
+package ${packageName}.domain.param;
+
+import java.io.Serializable;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+#foreach ($import in $importList)
+import ${import};
+#end
+
+/**
+ * ${entity.comment}列表查询条件
+ * @domain ${ClassName}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+public class Query${ClassName} implements Serializable{
+#foreach ($field in $queryFields)
+
+    #if($field.queryType == "BETWEEN")
+        /** 查询范围-${field.comment}开始 */
+        private $field.javaType begin$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
+        /** 查询范围-${field.comment}结束 */
+        private $field.javaType end$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
+    #else
+        /** $field.comment */
+        private $field.javaType $field.javaField;
+    #end
+#end
+}

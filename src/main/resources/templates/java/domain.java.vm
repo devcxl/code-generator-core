@@ -10,17 +10,19 @@ import ${import};
 #end
 
 /**
- * ${table.tableComment}实体
+ * ${entity.comment}实体
  * @table ${tableName}
  * @author ${author}
  * @date ${datetime}
+ *        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end)
+VALUES (#foreach($field in $fields)`#{$field.name}`#if($foreach.hasNext),#end#end )
  */
 @Getter
 @Setter
 @Builder
 public class ${ClassName} implements Serializable{
-#foreach ($column in $columns)
-    /** $column.comment */
-    private $column.javaType $column.javaField;
+#foreach ($field in $fields)
+    /** $field.comment */
+    private $field.javaType $field.javaField;
 #end
 }

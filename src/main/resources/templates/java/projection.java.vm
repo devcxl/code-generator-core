@@ -10,16 +10,16 @@ import ${import};
 #end
 
 /**
- * ${table.tableComment}投影
- * @domain ${ClassName} $column.isList
+ * ${entity.comment}投影
+ * @domain ${ClassName}
  * @author ${author}
  * @date ${datetime}
  */
 @Getter
 @Setter
 public class ${ClassName}Projection implements Serializable{
-#foreach ($column in $showList)
-    /** $column.comment */
-    private $column.javaType $column.javaField;
+#foreach ($field in $showListFields)
+    /** $field.comment */
+    private $field.javaType $field.javaField;
 #end
 }
