@@ -19,21 +19,21 @@
 #set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
 #if($field.query)
 #if($field.queryType == "EQ")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` = #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` = #{query.$javaField}</if>
 #elseif($queryType == "NE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` != #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` != #{query.$javaField}</if>
 #elseif($queryType == "GT")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &gt; #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &gt; #{query.$javaField}</if>
 #elseif($queryType == "GTE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &gt;= #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &gt;= #{query.$javaField}</if>
 #elseif($queryType == "LT")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &lt; #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &lt; #{query.$javaField}</if>
 #elseif($queryType == "LTE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &lt;= #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &lt;= #{query.$javaField}</if>
 #elseif($queryType == "LIKE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` like concat('%', #{$javaField}, '%')</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` like concat('%', #{query.$javaField}, '%')</if>
 #elseif($queryType == "BETWEEN")
-             <if test="begin$AttrName != null and begin$AttrName != '' and end$AttrName != null and end$AttrName != ''"> and `$columnName` between #{begin$AttrName} and #{end$AttrName}</if>
+             <if test="query.begin$AttrName != null and query.begin$AttrName != '' and query.end$AttrName != null and query.end$AttrName != ''"> and `$columnName` between #{query.begin$AttrName} and #{query.end$AttrName}</if>
 #end
 #end
 #end
@@ -43,7 +43,7 @@
 #end
     </select>
 
-    <select id="count"  resultMap="${ClassName}Result">
+    <select id="count" resultType="java.lang.Long">
         select count(1) from `${tableName}`
         <where>
 #foreach($field in $fields)
@@ -54,21 +54,21 @@
 #set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
 #if($field.query)
 #if($field.queryType == "EQ")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` = #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` = #{query.$javaField}</if>
 #elseif($queryType == "NE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` != #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` != #{query.$javaField}</if>
 #elseif($queryType == "GT")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &gt; #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &gt; #{query.$javaField}</if>
 #elseif($queryType == "GTE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &gt;= #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &gt;= #{query.$javaField}</if>
 #elseif($queryType == "LT")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &lt; #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &lt; #{query.$javaField}</if>
 #elseif($queryType == "LTE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` &lt;= #{$javaField}</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` &lt;= #{query.$javaField}</if>
 #elseif($queryType == "LIKE")
-             <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and `$columnName` like concat('%', #{$javaField}, '%')</if>
+             <if test="query.$javaField != null #if($javaType == 'String' ) and query.$javaField.trim() != ''#end"> and `$columnName` like concat('%', #{query.$javaField}, '%')</if>
 #elseif($queryType == "BETWEEN")
-             <if test="begin$AttrName != null and begin$AttrName != '' and end$AttrName != null and end$AttrName != ''"> and `$columnName` between #{begin$AttrName} and #{end$AttrName}</if>
+             <if test="query.begin$AttrName != null and query.begin$AttrName != '' and query.end$AttrName != null and query.end$AttrName != ''"> and `$columnName` between #{query.begin$AttrName} and #{query.end$AttrName}</if>
 #end
 #end
 #end

@@ -64,7 +64,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
      * @return
      **/
     public CommonResp<?> batchDelete(List<${primaryKeyField.fieldType.javaShortType}> ids){
-        ${className}Mapper.batchDelete(id);
+        ${className}Mapper.batchDelete(ids);
         return CommonResp.ok();
     }
 

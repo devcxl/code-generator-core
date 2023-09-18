@@ -6,6 +6,7 @@ import ${packageName}.domain.${ClassName};
 import ${packageName}.domain.param.Query${ClassName};
 import cn.devcxl.common.base.PageRequest;
 import ${primaryKeyField.fieldType.javaType};
+import org.apache.ibatis.annotations.Param;
 
 /**
  * ${entity.name}Mapper接口
@@ -22,7 +23,7 @@ public interface ${ClassName}Mapper {
      * @param pageRequest 分页查询参数
      * @return ${ClassName}集合
      */
-    List<${ClassName}> page(Query${ClassName} query${ClassName}, PageRequest pageRequest);
+    List<${ClassName}> page(@Param("query") Query${ClassName} query${ClassName}, @Param("page") PageRequest pageRequest);
 
 
     /**
@@ -63,7 +64,7 @@ public interface ${ClassName}Mapper {
      * @param pageRequest 分页查询参数
      * @return 统计数量
      */
-    Long count(Query${ClassName} query${ClassName}, PageRequest pageRequest);
+    Long count(@Param("query") Query${ClassName} query${ClassName}, @Param("page") PageRequest pageRequest);
 
 
     /**
@@ -71,7 +72,7 @@ public interface ${ClassName}Mapper {
      * @param ids
      * @return
     */
-    int batchDelete(List<Long> ids);
+    int batchDelete(List<${primaryKeyField.fieldType.javaShortType}> ids);
 
 
 }
