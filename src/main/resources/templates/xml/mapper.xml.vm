@@ -8,7 +8,7 @@
     #end
     </resultMap>
 
-    <select id="list" parameterType="${ClassName}" resultMap="${ClassName}Result">
+    <select id="page" parameterType="${ClassName}" resultMap="${ClassName}Result">
         select #foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end from `${tableName}`
         <where>
 #foreach($field in $fields)

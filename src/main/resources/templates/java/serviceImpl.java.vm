@@ -2,39 +2,40 @@ package ${packageName}.service.impl;
 
 import java.util.List;
 import java.util.ArrayList;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.pearadmin.common.web.domain.request.PageDomain;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.devcxl.common.base.*;
 import org.springframework.stereotype.Service;
 import ${packageName}.mapper.${ClassName}Mapper;
-import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import ${packageName}.domain.${ClassName};
+import ${packageName}.domain.param.Query${ClassName};
 
-import java.util.Arrays;
 /**
- * ${functionName}Service业务层处理
+ * ${ClassName}Service业务层处理
  *
  * @author ${author}
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper,${ClassName}> implements I${ClassName}Service {
+public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
+    private ${ClassName}Mapper ${className}Mapper;
+
+    public ServiceImpl(${ClassName}Mapper ${className}Mapper) {
+        this.${className}Mapper = ${className}Mapper;
+    }
 
     /**
-     * 查询${functionName}
+     * 查询${ClassName}
      * @param ${className} ${functionName}
-     * @param pageDomain
-     * @return ${functionName} 分页集合
+     * @param pageRequest
+     * @return ${ClassName} 分页集合
      * */
     @Override
-    public PageInfo<${ClassName}> select${ClassName}Page(${ClassName} ${className}, PageDomain pageDomain) {
-        PageHelper.startPage(pageDomain.getPage(), pageDomain.getLimit());
-        List<${ClassName}> data = baseMapper.select${ClassName}List(${className});
-        return new PageInfo<>(data);
+    public PageResponse<${ClassName}> ${className}Page(Query${ClassName} query${ClassName}, PageRequest pageRequest) {
+        List<${ClassName}> list = ${className}Mapper.page(query${ClassName}, pageRequest);
+        Long count = ${className}Mapper.count(query${ClassName}, pageRequest);
+        return new PageResponse<${ClassName}>(pageRequest,count,list);
     }
 
 }

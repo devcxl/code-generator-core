@@ -56,7 +56,7 @@ public class VelocityUtils {
         // 实体类
         templates.add("templates/java/domain.java.vm");
         // 展示类
-//        templates.add("templates/java/projection.java.vm");
+        templates.add("templates/java/projection.java.vm");
         // 查询条件
         templates.add("templates/java/query.java.vm");
 //        templates.add("templates/java/service.java.vm");

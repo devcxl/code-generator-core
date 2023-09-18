@@ -1,25 +1,24 @@
 package ${packageName}.service;
 
 import java.util.List;
-import com.github.pagehelper.PageInfo;
-import com.pearadmin.common.web.domain.request.PageDomain;
+import cn.devcxl.common.base.*;
 import ${packageName}.domain.${ClassName};
-import com.baomidou.mybatisplus.extension.service.IService;
+import ${packageName}.domain.param.Query${ClassName};
 
 /**
- * ${functionName}Service接口
+ * ${ClassName}Service接口
  *
  * @author ${author}
  * @date ${datetime}
  */
-public interface I${ClassName}Service extends IService<${ClassName}> {
+public interface I${ClassName}Service {
 
     /**
-     * 查询${functionName}
-     * @param ${className} ${functionName}
-     * @param pageDomain
-     * @return ${functionName} 分页集合
+     * 查询${ClassName}
+     * @param Query${ClassName}
+     * @param pageRequest
+     * @return ${ClassName} 分页集合
      * */
-    PageInfo<${ClassName}> select${ClassName}Page(${ClassName} ${className}, PageDomain pageDomain);
+    PageResponse<${ClassName}> select${ClassName}Page(${ClassName} ${className}, PageRequest pageRequest);
 
 }
