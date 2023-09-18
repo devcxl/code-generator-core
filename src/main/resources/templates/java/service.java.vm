@@ -15,10 +15,31 @@ public interface I${ClassName}Service {
 
     /**
      * 查询${ClassName}
-     * @param Query${ClassName}
-     * @param pageRequest
+     * @param query${ClassName} ${entity.name}列表查询条件
+     * @param pageRequest  分页查询参数
      * @return ${ClassName} 分页集合
-     * */
-    PageResponse<${ClassName}> select${ClassName}Page(Query${ClassName} query${className}, PageRequest pageRequest);
+     **/
+    PageResponse<${ClassName}> select${ClassName}Page(Query${ClassName} query${ClassName}, PageRequest pageRequest);
+
+    /**
+     * 添加${ClassName}
+     * @param ${className}
+     * @return
+     **/
+    CommonResp<?> add(${ClassName} ${className});
+
+    /**
+     * 删除${ClassName}
+     * @param id
+     * @return
+     **/
+    CommonResp<?> delete(${primaryKeyField.fieldType.javaShortType} id);
+
+    /**
+     * 修改${ClassName}
+     * @param ${className}
+     * @return
+     **/
+    CommonResp<?> update(${ClassName} ${className});
 
 }
