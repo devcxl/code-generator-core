@@ -52,7 +52,7 @@ public class CodeGenerator {
         VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
 
 
-        String template = "templates/java/service.java.vm" ;
+        String template = "templates/java/serviceImpl.java.vm" ;
         StringWriter sw = new StringWriter();
         Template tpl = Velocity.getTemplate(template, Velocity.ENCODING_DEFAULT);
         tpl.merge(context, sw);

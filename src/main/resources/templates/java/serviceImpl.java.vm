@@ -9,7 +9,7 @@ import ${packageName}.mapper.${ClassName}Mapper;
 import ${packageName}.service.I${ClassName}Service;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.domain.param.Query${ClassName};
-
+import ${primaryKeyField.fieldType.javaType};
 /**
  * ${ClassName}Service业务层处理
  *
@@ -27,15 +27,44 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     /**
      * 查询${ClassName}
-     * @param ${className} ${functionName}
-     * @param pageRequest
+     * @param query${ClassName} ${entity.name}列表查询条件
+     * @param pageRequest  分页查询参数
      * @return ${ClassName} 分页集合
-     * */
+     **/
     @Override
-    public PageResponse<${ClassName}> ${className}Page(Query${ClassName} query${ClassName}, PageRequest pageRequest) {
+    public PageResponse<${ClassName}> select${ClassName}Page(Query${ClassName} query${ClassName}, PageRequest pageRequest){
         List<${ClassName}> list = ${className}Mapper.page(query${ClassName}, pageRequest);
         Long count = ${className}Mapper.count(query${ClassName}, pageRequest);
         return new PageResponse<${ClassName}>(pageRequest,count,list);
     }
 
+    /**
+     * 添加${ClassName}
+     * @param ${className}
+     * @return
+     **/
+    public CommonResp<?> add(${ClassName} ${className}){
+        ${className}Mapper.insert(${className});
+        return CommonResp.ok();
+    }
+
+    /**
+     * 删除${ClassName}
+     * @param id
+     * @return
+     **/
+    public CommonResp<?> delete(${primaryKeyField.fieldType.javaShortType} id){
+        ${className}Mapper.delete(id);
+        return CommonResp.ok();
+    }
+
+    /**
+     * 修改${ClassName}
+     * @param ${className}
+     * @return
+     **/
+    public CommonResp<?> update(${ClassName} ${className}){
+        ${className}Mapper.update(${className});
+        return CommonResp.ok();
+    }
 }
