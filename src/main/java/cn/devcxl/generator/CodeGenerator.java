@@ -27,6 +27,7 @@ public class CodeGenerator {
         configuration.setAuthor("devcxl");
         configuration.setPackageName("cn.devcxl.code");
         configuration.setTablePrefix("cms_");
+        configuration.setProjectSrcPath("/home/devcxl/IdeaProjects/code-gen-template/src/");
 
         List<FieldInfo> fieldInfos = new ArrayList<>();
 
@@ -37,6 +38,8 @@ public class CodeGenerator {
         FieldInfo ageField = new FieldInfo("age", "年龄", FieldType.INTEGER, "(3)", "",false, false, false, true, true, true, true, "EQ", "input", "");
         FieldInfo genderField = new FieldInfo("gender", "性别", FieldType.TINYINT, "(1)", "",false, false, false, true, true, true, true, "EQ", "select", "genderDict");
         FieldInfo birthdayField = new FieldInfo("birthday", "生日", FieldType.DATE, "", "",false, false, false, true, true, true, true, "BETWEEN", "datetime", "");
+        FieldInfo createAt = new FieldInfo("createAt", "创建时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP",false, false, true, false, false, false, true, "BETWEEN", "datetime", "");
+        FieldInfo updateAt = new FieldInfo("updateAt", "更新时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP",false, false, true, false, false, false, false, "BETWEEN", "datetime", "");
 
         fieldInfos.add(idField);
         fieldInfos.add(usernameField);
@@ -45,24 +48,31 @@ public class CodeGenerator {
         fieldInfos.add(ageField);
         fieldInfos.add(genderField);
         fieldInfos.add(birthdayField);
+        fieldInfos.add(createAt);
+        fieldInfos.add(updateAt);
 
         // 创建表信息
         EntityInfo entityInfo = new EntityInfo(configuration, "用户测试", "User", "管理用户信息", fieldInfos);
 
+        run(configuration, List.of(entityInfo));
+    }
+
+    public static void run(Configuration configuration,List<EntityInfo> entityInfos){
         VelocityInitializer.initVelocity();
-        VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
 
-
-        List<String> templateList = VelocityUtils.getTemplateList();
-
-        for (String s : templateList) {
-            StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(s, Velocity.ENCODING_DEFAULT);
-            tpl.merge(context, sw);
-            String fileName = VelocityUtils.getFileName(s,configuration,entityInfo);
-            System.out.println(fileName);
-            FileUtil.writeUtf8String(sw.toString(),"/home/devcxl/IdeaProjects/code-gen-template/src/"+fileName);
+        for (EntityInfo entityInfo : entityInfos) {
+            VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
+            List<String> templateList = VelocityUtils.getTemplateList();
+            for (String s : templateList) {
+                StringWriter sw = new StringWriter();
+                Template tpl = Velocity.getTemplate(s, Velocity.ENCODING_DEFAULT);
+                tpl.merge(context, sw);
+                String fileName = VelocityUtils.getFileName(s,configuration,entityInfo);
+                System.out.println(fileName);
+                FileUtil.writeUtf8String(sw.toString(),configuration.getProjectSrcPath()+fileName);
+            }
         }
+
     }
 
 }

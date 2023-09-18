@@ -44,11 +44,6 @@ public class EntityInfo {
     private String tableName;
 
     /**
-     * 生成文件的输出路径
-     */
-    private String outPath;
-
-    /**
      * 实体属性信息
      */
     private List<FieldInfo> fields;
@@ -65,11 +60,7 @@ public class EntityInfo {
      */
     public EntityInfo(Configuration configuration, String name, String className, String comment, List<FieldInfo> fields) {
         String tablePrefix = configuration.getTablePrefix();
-        String projectSrcPath = configuration.getProjectSrcPath();
-        String packageName = configuration.getPackageNameWithSlash();
-
         this.className = GeneratorUtils.toUpperCaseCamelCase(className);
-        this.outPath = projectSrcPath + packageName;
         this.name = name;
         this.tableName = tablePrefix + GeneratorUtils.toSnakeCase(this.className);
         this.comment = comment;

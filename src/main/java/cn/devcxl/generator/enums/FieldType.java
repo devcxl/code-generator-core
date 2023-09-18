@@ -16,11 +16,12 @@ public enum FieldType {
     CHAR("java.lang.String", "char"),
     VARCHAR("java.lang.String", "varchar"),
     TEXT("java.lang.String", "text"),
-    DATE("java.sql.Date", "date"),
+    DATE("java.util.Date", "date"),
     TIME("java.sql.Time", "time"),
-    TIMESTAMP("java.sql.Timestamp", "timestamp");
+    TIMESTAMP("java.util.Date", "timestamp");
     private String javaType;
     private String sqlType;
+
 
     FieldType(String javaType, String sqlType) {
         this.javaType = javaType;
