@@ -78,12 +78,12 @@
     <!-- 增加 -->
     <insert id="insert" parameterType="${packageName}.domain.${ClassName}">
         INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $fields) #{$field.sqlField} #if($foreach.hasNext),#end#end )
+        VALUES (#foreach($field in $fields) #{$field.javaField} #if($foreach.hasNext),#end#end )
     </insert>
     <!-- 增加 -->
     <insert id="insertRequired" parameterType="${packageName}.domain.${ClassName}">
         INSERT INTO `${tableName}` (#foreach($field in $requiredFields)`$field.sqlField`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $requiredFields) #{$field.sqlField} #if($foreach.hasNext),#end#end )
+        VALUES (#foreach($field in $requiredFields) #{$field.javaField} #if($foreach.hasNext),#end#end )
     </insert>
 
     <!-- 删除用户（虚拟删除，设置标记字段） -->
