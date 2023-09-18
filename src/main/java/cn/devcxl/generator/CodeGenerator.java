@@ -22,7 +22,7 @@ public class CodeGenerator {
         // 创建生成配置
         Configuration configuration = new Configuration();
         configuration.setAuthor("devcxl");
-        configuration.setPackageName("cn.devcxl.cms");
+        configuration.setPackageName("cn.devcxl.code");
         configuration.setAutoRemovePre(true);
         configuration.setTablePrefix("cms_");
 

@@ -21,7 +21,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     private ${ClassName}Mapper ${className}Mapper;
 
-    public ServiceImpl(${ClassName}Mapper ${className}Mapper) {
+    public ${ClassName}ServiceImpl(${ClassName}Mapper ${className}Mapper) {
         this.${className}Mapper = ${className}Mapper;
     }
 

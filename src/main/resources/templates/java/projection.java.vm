@@ -2,7 +2,6 @@ package ${packageName}.domain.projection;
 
 import java.io.Serializable;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 #foreach ($import in $importList)

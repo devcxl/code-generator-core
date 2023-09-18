@@ -19,6 +19,6 @@ public interface I${ClassName}Service {
      * @param pageRequest
      * @return ${ClassName} 分页集合
      * */
-    PageResponse<${ClassName}> select${ClassName}Page(${ClassName} ${className}, PageRequest pageRequest);
+    PageResponse<${ClassName}> select${ClassName}Page(Query${ClassName} query${className}, PageRequest pageRequest);
 
 }

@@ -59,11 +59,11 @@ public class VelocityUtils {
         templates.add("templates/java/projection.java.vm");
         // 查询条件
         templates.add("templates/java/query.java.vm");
-//        templates.add("templates/java/service.java.vm");
-//        templates.add("templates/java/serviceImpl.java.vm");
-//        templates.add("templates/java/controller.java.vm");
+        templates.add("templates/java/service.java.vm");
+        templates.add("templates/java/serviceImpl.java.vm");
+        templates.add("templates/java/controller.java.vm");
 //
-//        templates.add("templates/java/mapper.java.vm");
+        templates.add("templates/java/mapper.java.vm");
         templates.add("templates/xml/mapper.xml.vm");
 
 //        templates.add("templates/html/list.html.vm");

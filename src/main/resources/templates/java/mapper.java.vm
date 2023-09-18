@@ -3,6 +3,8 @@ package ${packageName}.mapper;
 import java.util.List;
 
 import ${packageName}.domain.${ClassName};
+import ${packageName}.domain.param.Query${ClassName};
+import cn.devcxl.common.base.PageRequest;
 
 /**
  * ${functionName}Mapper接口
@@ -27,5 +29,14 @@ public interface ${ClassName}Mapper {
      * @return 统计数量
      */
     Long count(Query${ClassName} query${ClassName}, PageRequest pageRequest);
+
+
+    /**
+     * 批量删除实体
+     * @param ids
+     * @return
+    */
+    int batchDelete(List<Long> ids);
+
 
 }
