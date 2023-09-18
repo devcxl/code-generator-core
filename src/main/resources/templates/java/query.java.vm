@@ -10,7 +10,7 @@ import ${import};
 #end
 
 /**
- * ${entity.comment}列表查询条件
+ * ${entity.name}列表查询条件
  * @domain ${ClassName}
  * @author ${author}
  * @date ${datetime}
