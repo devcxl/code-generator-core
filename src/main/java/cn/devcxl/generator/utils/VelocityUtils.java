@@ -1,5 +1,6 @@
 package cn.devcxl.generator.utils;
 
+import cn.devcxl.generator.constant.GeneratorConstant;
 import cn.devcxl.generator.domain.Configuration;
 import cn.devcxl.generator.domain.FieldInfo;
 import cn.devcxl.generator.domain.EntityInfo;
@@ -15,10 +16,7 @@ import java.util.List;
  * @author devcxl
  */
 public class VelocityUtils {
-    /**
-     * 项目空间路径
-     */
-    private static final String PROJECT_PATH = "main/java";
+
 
     /**
      * 设置模板变量信息
@@ -59,22 +57,14 @@ public class VelocityUtils {
      */
     public static List<String> getTemplateList() {
         List<String> templates = new ArrayList<String>();
-        // 实体类
         templates.add("templates/java/domain.java.vm");
-//        // 展示类
-//        templates.add("templates/java/projection.java.vm");
-//        // 查询条件
-//        templates.add("templates/java/query.java.vm");
-//        templates.add("templates/java/service.java.vm");
-//        templates.add("templates/java/serviceImpl.java.vm");
-//        templates.add("templates/java/controller.java.vm");
-////
-//        templates.add("templates/java/mapper.java.vm");
-//        templates.add("templates/xml/mapper.xml.vm");
-
-//        templates.add("templates/html/list.html.vm");
-//        templates.add("templates/html/add.html.vm");
-//        templates.add("templates/html/edit.html.vm");
+        templates.add("templates/java/projection.java.vm");
+        templates.add("templates/java/query.java.vm");
+        templates.add("templates/java/service.java.vm");
+        templates.add("templates/java/serviceImpl.java.vm");
+        templates.add("templates/java/controller.java.vm");
+        templates.add("templates/java/mapper.java.vm");
+        templates.add("templates/xml/mapper.xml.vm");
         templates.add("templates/sql/sql.vm");
         return templates;
     }
@@ -86,12 +76,15 @@ public class VelocityUtils {
         String fileName = "";
         String packageName = configuration.getPackageName();
         String className = entityInfo.getClassName();
-        String businessName = entityInfo.getComment();
-        String javaPath = PROJECT_PATH + "/" + packageName.replace(".", "/");
+        String tableName = entityInfo.getTableName();
+        String javaPath =   GeneratorConstant.JAVA_CODE_PATH + packageName.replace(".", "/");
         if (template.contains("domain.java.vm")) {
             fileName = String.format("%s/domain/%s.java", javaPath, className);
-        }
-        if (template.contains("mapper.java.vm")) {
+        } else if (template.contains("query.java.vm")) {
+            fileName = String.format("%s/domain/param/Query%s.java", javaPath, className);
+        } else if (template.contains("projection.java.vm")) {
+            fileName = String.format("%s/domain/projection/%sProjection.java", javaPath, className);
+        } else if (template.contains("mapper.java.vm")) {
             fileName = String.format("%s/mapper/%sMapper.java", javaPath, className);
         } else if (template.contains("service.java.vm")) {
             fileName = String.format("%s/service/I%sService.java", javaPath, className);
@@ -100,9 +93,9 @@ public class VelocityUtils {
         } else if (template.contains("controller.java.vm")) {
             fileName = String.format("%s/controller/%sController.java", javaPath, className);
         } else if (template.contains("mapper.xml.vm")) {
-            fileName = String.format("%s/mapper/xml/%sMapper.xml", javaPath, className);
+            fileName = String.format("%s/mapper/%sMapper.xml", GeneratorConstant.RESOURCES_PATH, className);
         } else if (template.contains("sql.vm")) {
-            fileName = businessName + "Menu.sql";
+            fileName = String.format("%s/sql/%s.sql",  GeneratorConstant.RESOURCES_PATH, tableName);
         }
         return fileName;
     }

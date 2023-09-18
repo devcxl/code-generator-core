@@ -102,7 +102,7 @@ public class FieldInfo {
     private String dictType;
 
 
-    public FieldInfo(String name, String comment, FieldType fieldType, String customSql, boolean isPk, boolean isIncrement, boolean isRequired, boolean isInsert, boolean isEdit, boolean isList, boolean isQuery, String queryType, String htmlType, String dictType) {
+    public FieldInfo(String name, String comment, FieldType fieldType, String customSql,String defaultValue, boolean isPk, boolean isIncrement, boolean isRequired, boolean isInsert, boolean isEdit, boolean isList, boolean isQuery, String queryType, String htmlType, String dictType) {
         this.name = name;
         this.javaField = GeneratorUtils.toLowerCaseCamelCase(this.name);
         this.sqlField = GeneratorUtils.toSnakeCase(this.name);
@@ -110,6 +110,7 @@ public class FieldInfo {
         this.comment = comment;
         this.fieldType = fieldType;
         this.customSql = customSql;
+        this.defaultValue = defaultValue;
 
         this.isPrimaryKey = isPk;
         this.isIncrement = isIncrement;

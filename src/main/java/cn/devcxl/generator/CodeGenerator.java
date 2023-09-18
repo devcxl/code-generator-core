@@ -5,6 +5,7 @@ import cn.devcxl.generator.domain.FieldInfo;
 import cn.devcxl.generator.domain.EntityInfo;
 import cn.devcxl.generator.enums.FieldType;
 import cn.devcxl.generator.utils.VelocityUtils;
+import cn.hutool.core.io.FileUtil;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
@@ -29,13 +30,13 @@ public class CodeGenerator {
 
         List<FieldInfo> fieldInfos = new ArrayList<>();
 
-        FieldInfo idField = new FieldInfo("id", "用户ID", FieldType.INTEGER, "(11)", true, true, true, false, false, false, true, "EQ", "input", "");
-        FieldInfo usernameField = new FieldInfo("userName", "用户名", FieldType.VARCHAR, "(30)", false, false, true, true, true, true, true, "LIKE", "input", "");
-        FieldInfo passwordField = new FieldInfo("password", "密码", FieldType.VARCHAR, "(64)", false, false, true, false, true, false, false, "", "input", "");
-        FieldInfo emailField = new FieldInfo("email", "邮箱", FieldType.VARCHAR, "(30)", false, false, false, true, true, true, true, "LIKE", "input", "");
-        FieldInfo ageField = new FieldInfo("age", "年龄", FieldType.INTEGER, "(3)", false, false, false, true, true, true, true, "EQ", "input", "");
-        FieldInfo genderField = new FieldInfo("gender", "性别", FieldType.TINYINT, "(1)", false, false, false, true, true, true, true, "EQ", "select", "genderDict");
-        FieldInfo birthdayField = new FieldInfo("birthday", "生日", FieldType.DATE, "", false, false, false, true, true, true, true, "BETWEEN", "datetime", "");
+        FieldInfo idField = new FieldInfo("id", "用户ID", FieldType.INTEGER, "(11)", "",true, true, true, false, false, false, true, "EQ", "input", "");
+        FieldInfo usernameField = new FieldInfo("userName", "用户名", FieldType.VARCHAR, "(30)", "", false, false, true, true, true, true, true, "LIKE", "input", "");
+        FieldInfo passwordField = new FieldInfo("password", "密码", FieldType.VARCHAR, "(64)","", false, false, true, false, true, false, false, "", "input", "");
+        FieldInfo emailField = new FieldInfo("email", "邮箱", FieldType.VARCHAR, "(30)", "",false, false, false, true, true, true, true, "LIKE", "input", "");
+        FieldInfo ageField = new FieldInfo("age", "年龄", FieldType.INTEGER, "(3)", "",false, false, false, true, true, true, true, "EQ", "input", "");
+        FieldInfo genderField = new FieldInfo("gender", "性别", FieldType.TINYINT, "(1)", "",false, false, false, true, true, true, true, "EQ", "select", "genderDict");
+        FieldInfo birthdayField = new FieldInfo("birthday", "生日", FieldType.DATE, "", "",false, false, false, true, true, true, true, "BETWEEN", "datetime", "");
 
         fieldInfos.add(idField);
         fieldInfos.add(usernameField);
@@ -46,17 +47,22 @@ public class CodeGenerator {
         fieldInfos.add(birthdayField);
 
         // 创建表信息
-        EntityInfo entityInfo = new EntityInfo(configuration, "用户表", "User", "管理用户信息", fieldInfos);
+        EntityInfo entityInfo = new EntityInfo(configuration, "用户测试", "User", "管理用户信息", fieldInfos);
 
         VelocityInitializer.initVelocity();
         VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
 
 
-        String template = "templates/java/serviceImpl.java.vm" ;
-        StringWriter sw = new StringWriter();
-        Template tpl = Velocity.getTemplate(template, Velocity.ENCODING_DEFAULT);
-        tpl.merge(context, sw);
-        System.out.printf("%s\n%s", template, sw.toString());
+        List<String> templateList = VelocityUtils.getTemplateList();
+
+        for (String s : templateList) {
+            StringWriter sw = new StringWriter();
+            Template tpl = Velocity.getTemplate(s, Velocity.ENCODING_DEFAULT);
+            tpl.merge(context, sw);
+            String fileName = VelocityUtils.getFileName(s,configuration,entityInfo);
+            System.out.println(fileName);
+            FileUtil.writeUtf8String(sw.toString(),"/home/devcxl/IdeaProjects/code-gen-template/src/"+fileName);
+        }
     }
 
 }

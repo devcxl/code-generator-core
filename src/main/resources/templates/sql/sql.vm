@@ -1,6 +1,5 @@
 CREATE TABLE `${tableName}` (
 #foreach($field in $fields)
-    ${field.sqlField} ${field.fieldType.sqlType}${field.customSql}#if($field.defaultValue != '') default $field.defaultValue#end#if($field.required) not null#else null#end#if($field.increment) auto_increment#end#if($foreach.hasNext),#end
+    ${field.sqlField} ${field.fieldType.sqlType}${field.customSql}#if($field.defaultValue != '') default $field.defaultValue#end#if($field.required) not null#else null#end#if($field.increment) auto_increment#end#if($field.primaryKey) primary key#end#if($foreach.hasNext),#end
 #end
-    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
