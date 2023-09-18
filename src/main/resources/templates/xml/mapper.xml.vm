@@ -4,18 +4,18 @@
 
     <resultMap type="${packageName}.domain.${ClassName}" id="${ClassName}Result">
     #foreach($field in $fields)
-        <result property="${field.javaField}" column="${field.name}"/>
+        <result property="${field.javaField}" column="${field.sqlField}"/>
     #end
     </resultMap>
 
     <select id="page" resultMap="${ClassName}Result">
-        select #foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end from `${tableName}`
+        select #foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end from `${tableName}`
         <where>
 #foreach($field in $fields)
 #set($queryType=$field.queryType)
 #set($javaField=$field.javaField)
 #set($javaType=$field.fieldType.javaShortType)
-#set($columnName=$field.name)
+#set($columnName=$field.sqlField)
 #set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
 #if($field.query)
 #if($field.queryType == "EQ")
@@ -50,7 +50,7 @@
 #set($queryType=$field.queryType)
 #set($javaField=$field.javaField)
 #set($javaType=$field.fieldType.javaShortType)
-#set($columnName=$field.name)
+#set($columnName=$field.sqlField)
 #set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
 #if($field.query)
 #if($field.queryType == "EQ")
@@ -77,18 +77,18 @@
 
     <!-- 增加 -->
     <insert id="insert" parameterType="${packageName}.domain.${ClassName}">
-        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $fields) #{$field.name} #if($foreach.hasNext),#end#end )
+        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $fields) #{$field.sqlField} #if($foreach.hasNext),#end#end )
     </insert>
     <!-- 增加 -->
     <insert id="insertRequired" parameterType="${packageName}.domain.${ClassName}">
-        INSERT INTO `${tableName}` (#foreach($field in $requiredFields)`$field.name`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $requiredFields) #{$field.name} #if($foreach.hasNext),#end#end )
+        INSERT INTO `${tableName}` (#foreach($field in $requiredFields)`$field.sqlField`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $requiredFields) #{$field.sqlField} #if($foreach.hasNext),#end#end )
     </insert>
 
     <!-- 删除用户（虚拟删除，设置标记字段） -->
     <update id="delete">
-        UPDATE ${tableName} SET is_deleted = 1 WHERE id = #{id}
+        UPDATE `${tableName}` SET is_deleted = 1 WHERE id = #{id}
     </update>
 
     <!-- 更新用户信息 -->
@@ -96,7 +96,7 @@
         UPDATE `${tableName}`
         <set>
         #foreach($field in $fields)
-        #if($field.name != $entity.primaryKeyField().name)
+        #if($field.sqlField != $entity.primaryKeyField().name)
             <if test="$field.name != null#if($field.fieldType.javaShortType == 'String' ) and $field.javaField.trim() != ''#end">
                 `$field.name` = #{$field.JavaField},
             </if>
@@ -108,7 +108,7 @@
 
     <!-- 根据用户ID查询单一用户 -->
     <select id="getById" parameterType="int" resultType="${packageName}.domain.${ClassName}">
-        SELECT * FROM `${tableName}` WHERE id = #{id}
+        SELECT  #foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end  FROM `${tableName}` WHERE id = #{id}
     </select>
 
     <!-- 批量虚拟删除 -->
@@ -116,7 +116,7 @@
         UPDATE `${tableName}`
         SET is_deleted = 1
         WHERE id IN
-        <foreach collection="list" item="userId" open="(" separator="," close=")">
+        <foreach collection="list" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
     </update>
