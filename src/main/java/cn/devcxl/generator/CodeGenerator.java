@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * 代码生成器
+ *
  * @author devcxl
  */
 public class CodeGenerator {
@@ -50,14 +51,12 @@ public class CodeGenerator {
         VelocityInitializer.initVelocity();
         VelocityContext context = VelocityUtils.prepareContext(configuration, entityInfo);
 
-        List<String> templates = VelocityUtils.getTemplateList();
-        for (String template : templates) {
-            StringWriter sw = new StringWriter();
-            Template tpl = Velocity.getTemplate(template, Velocity.ENCODING_DEFAULT);
-            tpl.merge(context, sw);
-            System.out.printf("%s\n%s", template, sw.toString());
-            System.out.print("\n===============================\n");
-        }
+
+        String template = "templates/java/projection.java.vm" ;
+        StringWriter sw = new StringWriter();
+        Template tpl = Velocity.getTemplate(template, Velocity.ENCODING_DEFAULT);
+        tpl.merge(context, sw);
+        System.out.printf("%s\n%s", template, sw.toString());
     }
 
 }

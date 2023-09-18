@@ -9,7 +9,7 @@ import ${import};
 #end
 
 /**
- * ${entity.comment}投影
+ * ${entity.name}投影
  * @domain ${ClassName}
  * @author ${author}
  * @date ${datetime}
@@ -19,6 +19,6 @@ import ${import};
 public class ${ClassName}Projection implements Serializable{
 #foreach ($field in $showListFields)
     /** $field.comment */
-    private $field.javaType $field.javaField;
+    private $field.fieldType.javaShortType $field.javaField;
 #end
 }

@@ -22,12 +22,12 @@ public class Query${ClassName} implements Serializable{
 
     #if($field.queryType == "BETWEEN")
         /** 查询范围-${field.comment}开始 */
-        private $field.javaType begin$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
+        private $field.fieldType.javaShortType begin$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
         /** 查询范围-${field.comment}结束 */
-        private $field.javaType end$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
+        private $field.fieldType.javaShortType end$field.javaField.substring(0,1).toUpperCase()${field.javaField.substring(1)};
     #else
         /** $field.comment */
-        private $field.javaType $field.javaField;
+        private $field.fieldType.javaShortType $field.javaField;
     #end
 #end
 }

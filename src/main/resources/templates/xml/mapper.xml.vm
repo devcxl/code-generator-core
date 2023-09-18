@@ -14,7 +14,7 @@
 #foreach($field in $fields)
 #set($queryType=$field.queryType)
 #set($javaField=$field.javaField)
-#set($javaType=$field.javaType)
+#set($javaType=$field.fieldType.javaShortType)
 #set($columnName=$field.name)
 #set($AttrName=$javaField.substring(0,1).toUpperCase() + ${javaField.substring(1)})
 #if($field.query)
@@ -65,7 +65,7 @@
         <set>
         #foreach($field in $fields)
         #if($field.name != $entity.primaryKeyField().name)
-            <if test="$field.name != null#if($field.javaType == 'String' ) and $field.javaField.trim() != ''#end">
+            <if test="$field.name != null#if($field.fieldType.javaShortType == 'String' ) and $field.javaField.trim() != ''#end">
                 `$field.name` = #{$field.JavaField},
             </if>
         #end
