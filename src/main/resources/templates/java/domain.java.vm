@@ -14,8 +14,6 @@ import ${import};
  * @table ${tableName}
  * @author ${author}
  * @date ${datetime}
- *        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.name`#if($foreach.hasNext),#end#end)
-VALUES (#foreach($field in $fields)`#{$field.name}`#if($foreach.hasNext),#end#end )
  */
 @Getter
 @Setter
