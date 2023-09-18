@@ -5,27 +5,62 @@ import java.util.List;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.domain.param.Query${ClassName};
 import cn.devcxl.common.base.PageRequest;
+import ${primaryKeyField.fieldType.javaType};
 
 /**
- * ${functionName}Mapper接口
+ * ${entity.name}Mapper接口
  *
  * @author ${author}
  * @date ${datetime}
  */
 public interface ${ClassName}Mapper {
+
     /**
      * 查询${ClassName}列表
      *
-     * @param ${className} ${functionName}
+     * @param query${ClassName}  ${entity.name}列表查询条件
+     * @param pageRequest 分页查询参数
      * @return ${ClassName}集合
      */
     List<${ClassName}> page(Query${ClassName} query${ClassName}, PageRequest pageRequest);
 
 
     /**
+     * 插入${ClassName}全部数据
+     * @return
+     */
+    int insert(${ClassName} ${className});
+
+
+    /**
+     * 插入${ClassName}必需数据
+     * @return
+     */
+    int insertRequired(${ClassName} ${className});
+
+
+    /**
+     * 根据${ClassName}的ID删除数据
+     * @return
+     */
+    int delete(${primaryKeyField.fieldType.javaShortType} id);
+
+    /**
+     * 根据${ClassName}的ID修改数据
+     * @return
+     */
+    int update(${ClassName} ${className});
+
+    /**
+     * 根据${ClassName}的ID查询数据
+     * @return
+     */
+    ${ClassName} getById(${primaryKeyField.fieldType.javaShortType} id);
+
+    /**
      * 查询${ClassName}列表的统计数量
-     * @param query
-     * @param pageRequest
+     * @param query${ClassName} ${entity.name}列表查询条件
+     * @param pageRequest 分页查询参数
      * @return 统计数量
      */
     Long count(Query${ClassName} query${ClassName}, PageRequest pageRequest);
