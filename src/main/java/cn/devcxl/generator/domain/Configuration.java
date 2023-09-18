@@ -28,14 +28,9 @@ public class Configuration {
     private String packageName;
 
     /**
-     * 自动去除表前缀，默认是false
+     * 表前缀
      **/
-    private boolean autoRemovePre = false;
-
-    /**
-     * 表前缀(类名不会包含表前缀)
-     **/
-    private String tablePrefix;
+    private String tablePrefix = "";
 
     /**
      * 包名路径模式 eg: cn/devcxl/cms

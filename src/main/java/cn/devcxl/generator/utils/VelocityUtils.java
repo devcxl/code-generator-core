@@ -27,8 +27,9 @@ public class VelocityUtils {
         String packageName = configuration.getPackageName();
         String author = configuration.getAuthor();
         VelocityContext velocityContext = new VelocityContext();
+        // base
         velocityContext.put("entity", entityInfo);
-        velocityContext.put("tableName", entityInfo.getName());
+        velocityContext.put("tableName", entityInfo.getTableName());
         velocityContext.put("ClassName", entityInfo.getClassName());
         velocityContext.put("className", StringUtils.uncapitalize(entityInfo.getClassName()));
         velocityContext.put("packageName", packageName);
@@ -36,9 +37,13 @@ public class VelocityUtils {
         velocityContext.put("datetime", DateUtil.today());
         velocityContext.put("importList", getImportList(entityInfo));
         velocityContext.put("fields", entityInfo.getFields());
+
+
+        velocityContext.put("primaryKeyField",entityInfo.primaryKeyField());
+
+        // other fields
         velocityContext.put("primaryKeyFields",entityInfo.primaryKeyFields());
         velocityContext.put("noPrimaryKeyFields",entityInfo.noPrimaryKeyFields());
-        velocityContext.put("primaryKeyField",entityInfo.primaryKeyField());
         velocityContext.put("showListFields", entityInfo.showListFields());
         velocityContext.put("requiredFields", entityInfo.requiredFields());
         velocityContext.put("queryFields", entityInfo.queryFields());
@@ -55,21 +60,21 @@ public class VelocityUtils {
         List<String> templates = new ArrayList<String>();
         // 实体类
         templates.add("templates/java/domain.java.vm");
-        // 展示类
-        templates.add("templates/java/projection.java.vm");
-        // 查询条件
-        templates.add("templates/java/query.java.vm");
-        templates.add("templates/java/service.java.vm");
-        templates.add("templates/java/serviceImpl.java.vm");
-        templates.add("templates/java/controller.java.vm");
-//
-        templates.add("templates/java/mapper.java.vm");
-        templates.add("templates/xml/mapper.xml.vm");
+//        // 展示类
+//        templates.add("templates/java/projection.java.vm");
+//        // 查询条件
+//        templates.add("templates/java/query.java.vm");
+//        templates.add("templates/java/service.java.vm");
+//        templates.add("templates/java/serviceImpl.java.vm");
+//        templates.add("templates/java/controller.java.vm");
+////
+//        templates.add("templates/java/mapper.java.vm");
+//        templates.add("templates/xml/mapper.xml.vm");
 
 //        templates.add("templates/html/list.html.vm");
 //        templates.add("templates/html/add.html.vm");
 //        templates.add("templates/html/edit.html.vm");
-//        templates.add("templates/sql/sql.vm");
+        templates.add("templates/sql/sql.vm");
         return templates;
     }
 

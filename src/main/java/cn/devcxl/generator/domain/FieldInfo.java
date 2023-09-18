@@ -1,8 +1,10 @@
 package cn.devcxl.generator.domain;
 
 import cn.devcxl.generator.enums.FieldType;
+import cn.devcxl.generator.utils.GeneratorUtils;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 生成表列名相关信息
@@ -12,39 +14,41 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FieldInfo {
+
     /**
-     * 字段名称
+     * 属性名称
      */
     private String name;
 
     /**
-     * 字段注释
+     * Java属性
+     */
+    private String javaField;
+
+    /**
+     * SQL属性
+     */
+    private String sqlField;
+
+    /**
+     * 属性注释
      */
     private String comment;
 
     /**
-     * 字段类型
+     * 属性类型
      */
     private FieldType fieldType;
-
-    /**
-     * 获取Java字段类型
-     *
-     * @return
-     */
-    public String getJavaType() {
-        String[] temp = fieldType.getJavaType().split("\\.");
-        return temp[temp.length - 1];
-    }
-
-    public String getJavaField() {
-        return name;
-    }
 
     /**
      * 可在字段类型后定义的自定义sql
      */
     private String customSql;
+
+    /**
+     * sql默认值
+     */
+    private String defaultValue="'test'";
 
     /**
      * 是否主键
@@ -100,9 +104,13 @@ public class FieldInfo {
 
     public FieldInfo(String name, String comment, FieldType fieldType, String customSql, boolean isPk, boolean isIncrement, boolean isRequired, boolean isInsert, boolean isEdit, boolean isList, boolean isQuery, String queryType, String htmlType, String dictType) {
         this.name = name;
+        this.javaField = GeneratorUtils.toLowerCaseCamelCase(this.name);
+        this.sqlField = GeneratorUtils.toSnakeCase(this.name);
+
         this.comment = comment;
         this.fieldType = fieldType;
         this.customSql = customSql;
+
         this.isPrimaryKey = isPk;
         this.isIncrement = isIncrement;
         this.isRequired = isRequired;

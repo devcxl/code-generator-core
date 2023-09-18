@@ -2,6 +2,8 @@ package cn.devcxl.generator.enums;
 
 /**
  * 字段类型
+ *
+ * @author devcxl
  */
 public enum FieldType {
     TINYINT("java.lang.Boolean", "tinyint"),
@@ -25,10 +27,30 @@ public enum FieldType {
         this.sqlType = sqlType;
     }
 
+    /**
+     * 获取Java类型全类名
+     *
+     * @return
+     */
     public String getJavaType() {
         return javaType;
     }
 
+    /**
+     * 获取Java类型短类名
+     *
+     * @return
+     */
+    public String getJavaShortType() {
+        String[] split = javaType.split("\\.");
+        return split[split.length - 1];
+    }
+
+    /**
+     * 获取数据库字段类型名
+     *
+     * @return
+     */
     public String getSqlType() {
         return sqlType;
     }

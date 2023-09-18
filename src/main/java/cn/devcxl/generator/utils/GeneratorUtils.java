@@ -1,33 +1,90 @@
 package cn.devcxl.generator.utils;
 
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @author devcxl
+ */
 public class GeneratorUtils {
 
+    private static final char UNDERSCORE = '_';
+    private static final char HYPHEN = '-';
+
+
+    public static String toCamelCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        String[] parts = input.split("[_-]");
+        StringBuilder result = new StringBuilder(parts[0]);
+
+        for (int i = 1; i < parts.length; i++) {
+            result.append(Character.toUpperCase(parts[i].charAt(0))).append(parts[i].substring(1));
+        }
+
+        return result.toString();
+    }
+
     /**
-     * 校验数组是否包含指定值
+     * 转驼峰命名法 首字母大写
      *
-     * @param arr         数组
-     * @param targetValue 值
-     * @return 是否包含
+     * @param input
+     * @return
      */
-    public static boolean arraysContains(String[] arr, String targetValue) {
-        return Arrays.asList(arr).contains(targetValue);
+    public static String toUpperCaseCamelCase(String input) {
+        String camelCase = toCamelCase(input);
+        if (camelCase.isEmpty()) {
+            return camelCase;
+        }
+        return Character.toUpperCase(camelCase.charAt(0)) + camelCase.substring(1);
     }
 
     /**
-     * 首字母小写
+     * 转驼峰命名法 首字母小写
+     *
+     * @param input
+     * @return
      */
-    public static String lowerCaptureName(String name) {
-        name = name.substring(0, 1).toLowerCase() + name.substring(1);
-        return name;
+    public static String toLowerCaseCamelCase(String input) {
+        String camelCase = toCamelCase(input);
+        if (camelCase.isEmpty()) {
+            return camelCase;
+        }
+        return Character.toLowerCase(camelCase.charAt(0)) + camelCase.substring(1);
     }
 
     /**
-     * 首字母大写
+     * 驼峰转下划线命名法
+     *
+     * @param input
+     * @return
      */
-    public static String upperCaptureName(String name) {
-        name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return name;
+    public static String toSnakeCase(String input) {
+        AtomicReference<StringBuilder> result = new AtomicReference<>(new StringBuilder());
+        input.chars().forEachOrdered(c -> {
+            if (Character.isUpperCase(c)) {
+                if (result.get().length() > 0) {
+                    result.get().append(UNDERSCORE);
+                }
+                result.get().append(Character.toLowerCase((char) c));
+            } else if (c == HYPHEN) {
+                result.get().append(UNDERSCORE);
+            } else {
+                result.get().append((char) c);
+            }
+        });
+        return result.get().toString();
     }
+
+    /**
+     * 驼峰转中划线命名法
+     *
+     * @param input
+     * @return
+     */
+    public static String toKebabCase(String input) {
+        return toSnakeCase(input).replace(UNDERSCORE, HYPHEN);
+    }
+
 }

@@ -10,7 +10,7 @@ import ${import};
 #end
 
 /**
- * ${entity.comment}实体
+ * ${entity.name}实体
  * @table ${tableName}
  * @author ${author}
  * @date ${datetime}
@@ -21,6 +21,6 @@ import ${import};
 public class ${ClassName} implements Serializable{
 #foreach ($field in $fields)
     /** $field.comment */
-    private $field.javaType $field.javaField;
+    private $field.fieldType.javaShortType $field.javaField;
 #end
 }
