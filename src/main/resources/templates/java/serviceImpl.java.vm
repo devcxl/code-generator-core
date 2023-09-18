@@ -59,6 +59,16 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     }
 
     /**
+     * 删除${ClassName}
+     * @param ids
+     * @return
+     **/
+    public CommonResp<?> batchDelete(List<${primaryKeyField.fieldType.javaShortType}> ids){
+        ${className}Mapper.batchDelete(id);
+        return CommonResp.ok();
+    }
+
+    /**
      * 修改${ClassName}
      * @param ${className}
      * @return

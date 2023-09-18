@@ -32,6 +32,7 @@ public class VelocityUtils {
         velocityContext.put("tableName", entityInfo.getTableName());
         velocityContext.put("ClassName", entityInfo.getClassName());
         velocityContext.put("className", GeneratorUtils.toLowerCaseCamelCase(entityInfo.getClassName()));
+        velocityContext.put("requestPath", GeneratorUtils.toKebabCase(entityInfo.getClassName()));
         velocityContext.put("packageName", packageName);
         velocityContext.put("author", author);
         velocityContext.put("datetime", DateUtil.today());

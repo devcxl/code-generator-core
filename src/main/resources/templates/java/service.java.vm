@@ -42,4 +42,11 @@ public interface I${ClassName}Service {
      **/
     CommonResp<?> update(${ClassName} ${className});
 
+
+    /**
+     * 批量删除实体
+     * @param ids
+     * @return
+    */
+    CommonResp<?> batchDelete(List<${primaryKeyField.fieldType.javaShortType}> ids);
 }
