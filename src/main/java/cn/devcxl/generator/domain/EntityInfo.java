@@ -1,5 +1,6 @@
 package cn.devcxl.generator.domain;
 
+import cn.devcxl.generator.constant.GeneratorConstant;
 import cn.devcxl.generator.utils.GeneratorUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -79,11 +80,24 @@ public class EntityInfo {
 
     /**
      * 未设置默认值的字段
+     *
      * @return
      */
     public List<FieldInfo> noDefaultValueFields() {
         return this.fields.stream().filter(fieldInfo -> Objects.equals(fieldInfo.getDefaultValue(), "")).collect(Collectors.toList());
     }
+
+    /**
+     * insertFields
+     *
+     * @return
+     */
+    public List<FieldInfo> insertFields() {
+        return this.fields.stream().filter(fieldInfo -> {
+            return Objects.equals(fieldInfo.getDefaultValue(), "") && !GeneratorUtils.containsString(GeneratorConstant.INSERT_EXCLUDE_FIELDS, fieldInfo.getName());
+        }).collect(Collectors.toList());
+    }
+
 
     /**
      * 列表展示的字段

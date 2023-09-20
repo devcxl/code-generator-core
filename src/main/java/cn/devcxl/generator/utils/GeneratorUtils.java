@@ -87,4 +87,14 @@ public class GeneratorUtils {
         return toSnakeCase(input).replace(UNDERSCORE, HYPHEN);
     }
 
+
+    public static boolean containsString(String[] array, String target) {
+        for (String str : array) {
+            if (str.equals(target)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

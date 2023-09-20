@@ -79,8 +79,8 @@
 
     <!-- 增加 -->
     <insert id="insert" parameterType="${packageName}.domain.${ClassName}">
-        INSERT INTO `${tableName}` (#foreach($field in $noDefaultValueFields)`$field.sqlField`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $noDefaultValueFields) #{$field.javaField} #if($foreach.hasNext),#end#end )
+        INSERT INTO `${tableName}` (#foreach($field in $insertFields)`$field.sqlField`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $insertFields) #{$field.javaField} #if($foreach.hasNext),#end#end )
     </insert>
     <!-- 增加 -->
     <insert id="insertRequired" parameterType="${packageName}.domain.${ClassName}">

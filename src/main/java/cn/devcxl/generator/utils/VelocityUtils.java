@@ -49,6 +49,7 @@ public class VelocityUtils {
         velocityContext.put("showListFields", entityInfo.showListFields());
         velocityContext.put("requiredFields", entityInfo.requiredFields());
         velocityContext.put("noDefaultValueFields", entityInfo.noDefaultValueFields());
+        velocityContext.put("insertFields", entityInfo.insertFields());
         velocityContext.put("queryFields", entityInfo.queryFields());
         return velocityContext;
     }
