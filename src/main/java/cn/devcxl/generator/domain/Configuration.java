@@ -33,6 +33,11 @@ public class Configuration {
     private String tablePrefix = "";
 
     /**
+     * 假删除 添加deleted字段
+     */
+    private boolean deletedFlag = true;
+
+    /**
      * 包名路径模式 eg: cn/devcxl/cms
      * @return
      */

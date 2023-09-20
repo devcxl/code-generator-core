@@ -37,7 +37,8 @@
 #end
 #end
 #end
-            and deleted = 0
+#if($deletedFlag)            and deleted = 0
+#end
         </where>
         limit #{page.startIndex},#{page.pageSize}
     </select>
@@ -71,14 +72,15 @@
 #end
 #end
 #end
-            and deleted = 0
+#if($deletedFlag)            and deleted = 0
+#end
         </where>
     </select>
 
     <!-- 增加 -->
     <insert id="insert" parameterType="${packageName}.domain.${ClassName}">
-        INSERT INTO `${tableName}` (#foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end)
-        VALUES (#foreach($field in $fields) #{$field.javaField} #if($foreach.hasNext),#end#end )
+        INSERT INTO `${tableName}` (#foreach($field in $noDefaultValueFields)`$field.sqlField`#if($foreach.hasNext),#end#end)
+        VALUES (#foreach($field in $noDefaultValueFields) #{$field.javaField} #if($foreach.hasNext),#end#end )
     </insert>
     <!-- 增加 -->
     <insert id="insertRequired" parameterType="${packageName}.domain.${ClassName}">
@@ -86,10 +88,7 @@
         VALUES (#foreach($field in $requiredFields) #{$field.javaField} #if($foreach.hasNext),#end#end )
     </insert>
 
-    <!-- 删除用户（虚拟删除，设置标记字段） -->
-    <update id="delete">
-        UPDATE `${tableName}` SET deleted = 1 WHERE id = #{id}
-    </update>
+
 
     <!-- 更新用户信息 -->
     <update id="update" parameterType="${packageName}.domain.${ClassName}">
@@ -103,15 +102,17 @@
         #end
         #end
         </set>
-        WHERE id = #{id} and deleted = 0
+        WHERE id = #{id}#if($deletedFlag) and deleted = 0#end
     </update>
 
     <!-- 根据用户ID查询单一用户 -->
     <select id="getById" parameterType="int" resultType="${packageName}.domain.${ClassName}">
-        SELECT  #foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end  FROM `${tableName}` WHERE id = #{id} and deleted = 0
+        SELECT #foreach($field in $fields)`$field.sqlField`#if($foreach.hasNext),#end#end  FROM `${tableName}` WHERE id = #{id}#if($deletedFlag) and deleted = 0#end
     </select>
 
-    <!-- 批量虚拟删除 -->
+
+#if($deletedFlag)
+    <!-- 批量删除 -->
     <update id="batchDelete" parameterType="list">
         UPDATE `${tableName}`
         SET deleted = 1
@@ -120,4 +121,22 @@
             #{id}
         </foreach>
     </update>
+    <!-- 删除用户（虚拟删除，设置标记字段） -->
+    <update id="delete">
+        UPDATE `${tableName}` SET deleted = 1 WHERE id = #{id}
+    </update>
+#else
+    <delete id="batchDelete" parameterType="list">
+        DELETE FROM `${tableName}`
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- 删除用户（虚拟删除，设置标记字段） -->
+    <delete id="delete">
+        DELETE FROM `${tableName}` WHERE id = #{id}
+    </delete>
+#end
+
 </mapper>

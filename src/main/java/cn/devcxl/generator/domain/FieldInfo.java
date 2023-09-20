@@ -48,7 +48,7 @@ public class FieldInfo {
     /**
      * sql默认值
      */
-    private String defaultValue="'test'";
+    private String defaultValue="";
 
     /**
      * 是否主键

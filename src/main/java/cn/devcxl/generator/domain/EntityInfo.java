@@ -3,10 +3,10 @@ package cn.devcxl.generator.domain;
 import cn.devcxl.generator.utils.GeneratorUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -75,6 +75,14 @@ public class EntityInfo {
      */
     public List<FieldInfo> requiredFields() {
         return this.fields.stream().filter(FieldInfo::isRequired).collect(Collectors.toList());
+    }
+
+    /**
+     * 未设置默认值的字段
+     * @return
+     */
+    public List<FieldInfo> noDefaultValueFields() {
+        return this.fields.stream().filter(fieldInfo -> Objects.equals(fieldInfo.getDefaultValue(), "")).collect(Collectors.toList());
     }
 
     /**

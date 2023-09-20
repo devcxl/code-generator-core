@@ -25,6 +25,9 @@ public class VelocityUtils {
         String packageName = configuration.getPackageName();
         String author = configuration.getAuthor();
         VelocityContext velocityContext = new VelocityContext();
+
+        velocityContext.put("deletedFlag", configuration.isDeletedFlag());
+
         // base
         velocityContext.put("entity", entityInfo);
         velocityContext.put("tableName", entityInfo.getTableName());
@@ -45,6 +48,7 @@ public class VelocityUtils {
         velocityContext.put("noPrimaryKeyFields",entityInfo.noPrimaryKeyFields());
         velocityContext.put("showListFields", entityInfo.showListFields());
         velocityContext.put("requiredFields", entityInfo.requiredFields());
+        velocityContext.put("noDefaultValueFields", entityInfo.noDefaultValueFields());
         velocityContext.put("queryFields", entityInfo.queryFields());
         return velocityContext;
     }
