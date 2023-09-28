@@ -1,10 +1,10 @@
 package cn.devcxl.generator.domain;
 
 import cn.devcxl.generator.enums.FieldType;
+import cn.devcxl.generator.enums.QueryType;
 import cn.devcxl.generator.utils.GeneratorUtils;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 生成表列名相关信息
@@ -89,7 +89,7 @@ public class FieldInfo {
     /**
      * 查询方式（EQ等于、NE不等于、GT大于、LT小于、LIKE模糊、BETWEEN范围）
      */
-    private String queryType;
+    private QueryType queryType;
 
     /**
      * 显示类型（input文本框、textarea文本域、select下拉框、checkbox复选框、radio单选框、datetime日期控件、upload上传控件）
@@ -102,7 +102,7 @@ public class FieldInfo {
     private String dictType;
 
 
-    public FieldInfo(String name, String comment, FieldType fieldType, String customSql,String defaultValue, boolean isPk, boolean isIncrement, boolean isRequired, boolean isInsert, boolean isEdit, boolean isList, boolean isQuery, String queryType, String htmlType, String dictType) {
+    public FieldInfo(String name, String comment, FieldType fieldType, String customSql, String defaultValue, boolean isPk, boolean isIncrement, boolean isRequired, boolean isInsert, boolean isEdit, boolean isList, boolean isQuery, QueryType queryType, String htmlType, String dictType) {
         this.name = name;
         this.javaField = GeneratorUtils.toLowerCaseCamelCase(this.name);
         this.sqlField = GeneratorUtils.toSnakeCase(this.name);

@@ -1,8 +1,8 @@
 package cn.devcxl.generator;
 
 import cn.devcxl.generator.domain.Configuration;
-import cn.devcxl.generator.domain.FieldInfo;
 import cn.devcxl.generator.domain.EntityInfo;
+import cn.devcxl.generator.domain.FieldInfo;
 import cn.devcxl.generator.enums.FieldType;
 import cn.devcxl.generator.utils.VelocityUtils;
 import cn.hutool.core.io.FileUtil;
@@ -13,6 +13,8 @@ import org.apache.velocity.app.Velocity;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static cn.devcxl.generator.enums.QueryType.*;
 
 /**
  * 代码生成器
@@ -31,15 +33,15 @@ public class CodeGenerator {
 
         List<FieldInfo> fieldInfos = new ArrayList<>();
 
-        FieldInfo idField = new FieldInfo("id", "用户ID", FieldType.INTEGER, "(11)", "",true, true, true, false, false, false, true, "EQ", "input", "");
-        FieldInfo usernameField = new FieldInfo("userName", "用户名", FieldType.VARCHAR, "(30)", "", false, false, true, true, true, true, true, "LIKE", "input", "");
-        FieldInfo passwordField = new FieldInfo("password", "密码", FieldType.VARCHAR, "(64)","", false, false, true, false, true, false, false, "", "input", "");
-        FieldInfo emailField = new FieldInfo("email", "邮箱", FieldType.VARCHAR, "(30)", "",false, false, false, true, true, true, true, "LIKE", "input", "");
-        FieldInfo ageField = new FieldInfo("age", "年龄", FieldType.INTEGER, "(3)", "",false, false, false, true, true, true, true, "EQ", "input", "");
-        FieldInfo genderField = new FieldInfo("gender", "性别", FieldType.TINYINT, "(1)", "",false, false, false, true, true, true, true, "EQ", "select", "genderDict");
-        FieldInfo birthdayField = new FieldInfo("birthday", "生日", FieldType.DATE, "", "",false, false, false, true, true, true, true, "BETWEEN", "datetime", "");
-        FieldInfo createAt = new FieldInfo("createAt", "创建时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP",false, false, true, false, false, false, true, "BETWEEN", "datetime", "");
-        FieldInfo updateAt = new FieldInfo("updateAt", "更新时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP",false, false, true, false, false, false, false, "BETWEEN", "datetime", "");
+        FieldInfo idField = new FieldInfo("id", "用户ID", FieldType.INTEGER, "(11)", "", true, true, true, false, false, false, true, EQ, "input", "");
+        FieldInfo usernameField = new FieldInfo("userName", "用户名", FieldType.VARCHAR, "(30)", "", false, false, true, true, true, true, true, LIKE, "input", "");
+        FieldInfo passwordField = new FieldInfo("password", "密码", FieldType.VARCHAR, "(64)", "", false, false, true, false, true, false, false, NONE, "input", "");
+        FieldInfo emailField = new FieldInfo("email", "邮箱", FieldType.VARCHAR, "(30)", "", false, false, false, true, true, true, true, LIKE, "input", "");
+        FieldInfo ageField = new FieldInfo("age", "年龄", FieldType.INTEGER, "(3)", "", false, false, false, true, true, true, true, EQ, "input", "");
+        FieldInfo genderField = new FieldInfo("gender", "性别", FieldType.TINYINT, "(1)", "", false, false, false, true, true, true, true, EQ, "select", "genderDict");
+        FieldInfo birthdayField = new FieldInfo("birthday", "生日", FieldType.DATE, "", "", false, false, false, true, true, true, true, BETWEEN, "datetime", "");
+        FieldInfo createAt = new FieldInfo("createAt", "创建时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP", false, false, true, false, false, false, true, BETWEEN, "datetime", "");
+        FieldInfo updateAt = new FieldInfo("updateAt", "更新时间", FieldType.TIMESTAMP, "", "CURRENT_TIMESTAMP", false, false, true, false, false, false, false, BETWEEN, "datetime", "");
 
         fieldInfos.add(idField);
         fieldInfos.add(usernameField);
