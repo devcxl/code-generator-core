@@ -6,26 +6,37 @@ package cn.devcxl.generator.enums;
  * @author devcxl
  */
 public enum FieldType {
-    TINYINT("java.lang.Boolean", "tinyint"),
-    SMALLINT("java.lang.Integer", "smallint"),
-    INTEGER("java.lang.Integer", "int"),
-    BIGINT("java.lang.Long", "bigint"),
-    FLOAT("java.lang.Float", "float"),
-    DOUBLE("java.lang.Double", "double"),
-    DECIMAL("java.math.BigDecimal", "decimal"),
-    CHAR("java.lang.String", "char"),
-    VARCHAR("java.lang.String", "varchar"),
-    TEXT("java.lang.String", "text"),
-    DATE("java.util.Date", "date"),
-    TIME("java.sql.Time", "time"),
-    TIMESTAMP("java.util.Date", "timestamp");
+
+    TINYINT("java.lang.Boolean", "tinyint", "boolean"),
+    SMALLINT("java.lang.Integer", "smallint", "number"),
+    INTEGER("java.lang.Integer", "int", "number"),
+    BIGINT("java.lang.Long", "bigint", "number"),
+    FLOAT("java.lang.Float", "float", "number"),
+    DOUBLE("java.lang.Double", "double", "number"),
+    DECIMAL("java.math.BigDecimal", "decimal", "number"),
+    CHAR("java.lang.String", "char", "string"),
+    VARCHAR("java.lang.String", "varchar", "string"),
+    TEXT("java.lang.String", "text", "string"),
+    DATE("java.util.Date", "date", "Date"),
+    TIME("java.sql.Time", "time", "Date"),
+    TIMESTAMP("java.util.Date", "timestamp", "Date");
+    /**
+     * Java类型
+     */
     private String javaType;
+    /**
+     * SQL类型
+     */
     private String sqlType;
+    /**
+     * TypeScript类型
+     */
+    private String tsType;
 
-
-    FieldType(String javaType, String sqlType) {
+    FieldType(String javaType, String sqlType, String tsType) {
         this.javaType = javaType;
         this.sqlType = sqlType;
+        this.tsType = tsType;
     }
 
     /**
@@ -53,6 +64,16 @@ public enum FieldType {
      * @return
      */
     public String getSqlType() {
+        return sqlType;
+    }
+
+
+    /**
+     * 获取TypeScript字段类型名
+     *
+     * @return
+     */
+    public String getTsType() {
         return sqlType;
     }
 

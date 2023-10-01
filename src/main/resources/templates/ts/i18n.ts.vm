@@ -1,0 +1,10 @@
+/**
+ * ${entity.name} i18n国际化支持
+ * @author ${author}
+ * @date ${datetime}
+ */
+export default {
+    #foreach($field in $fields)
+        '${className}.${field.javaField}':'${field.comment}'#if($foreach.hasNext),#end
+    #end
+};

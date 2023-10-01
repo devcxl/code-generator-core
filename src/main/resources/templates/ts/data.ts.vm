@@ -1,0 +1,11 @@
+/**
+ * ${entity.name}
+ * @author ${author}
+ * @date ${datetime}
+ */
+export interface ${ClassName}{
+#foreach ($field in $showListFields)
+    /** ${field.comment} */
+    ${field.fieldType.tsType}: ${field.javaField};
+#end
+}
