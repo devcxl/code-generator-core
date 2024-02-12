@@ -12,7 +12,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <hutools.version>5.8.17</hutools.version>
+        <hutools.version>5.8.25</hutools.version>
         <lombok.version>1.18.28</lombok.version>
     </properties>
 
@@ -29,12 +29,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutools.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.devcxl</groupId>
-            <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
